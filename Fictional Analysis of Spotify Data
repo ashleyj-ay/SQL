@@ -56,4 +56,18 @@ SELECT artist_name
 FROM Spotifydata
 GROUP BY artist_name, track_name;
 
+--Using a CTE to identify the AVG popularity for artists, for every artist with an AVG popularity of 90 or above identifying their name, avg popularity and labeling them as a "Top Star"
+WITH popularity_average_CTE AS (
+SELECT s.artist_name,
+AVG(s.popularity) AS average_popularity
+FROM SpotifyData s 
+GROUP BY s.artist_name
+)
+ 
+SELECT  artist_name,
+        average_popularity,
+        'Top Star' AS tag
+FROM popularity_average_CTE
+WHERE average_popularity>=90;
+
 
